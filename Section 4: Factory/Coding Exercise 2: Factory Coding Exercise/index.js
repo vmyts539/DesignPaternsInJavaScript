@@ -10,7 +10,7 @@ class Person {
 class PersonFactory {
   createPerson(name) {
     let id = people.length;
-    let person = new Person(id, name)
+    let person = new Person(id, name);
 
     people.push(person);
 
