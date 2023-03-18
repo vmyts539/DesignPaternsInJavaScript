@@ -1,7 +1,9 @@
 class Tag {
-  static get indentSize() { return 2; }
+  static get indentSize() {
+    return 2;
+  }
 
-  constructor(name='', text='') {
+  constructor(name = "", text = "") {
     this.name = name;
     this.text = text;
     this.children = [];
@@ -9,21 +11,21 @@ class Tag {
 
   toStringImpl(indent) {
     let html = [];
-    let i = ' '.repeat(indent * Tag.indentSize);
+    let i = " ".repeat(indent * Tag.indentSize);
     html.push(`${i}<${this.name}>\n`);
 
     if (this.text.length > 0) {
-      html.push(' '.repeat(Tag.indentSize * (indent+1)));
+      html.push(" ".repeat(Tag.indentSize * (indent + 1)));
       html.push(this.text);
-      html.push('\n');
+      html.push("\n");
     }
 
     for (let child of this.children) {
-      html.push(child.toStringImpl(indent+1));
+      html.push(child.toStringImpl(indent + 1));
     }
 
     html.push(`${i}</${this.name}>\n`);
-    return html.join('');
+    return html.join("");
   }
 
   toString() {
@@ -74,7 +76,7 @@ class HtmlBuilder {
 
 // console.log(html.join(''));
 
-const words = ['hello', 'world'];
+const words = ["hello", "world"];
 // html = [];
 // html.push('<ul>\n');
 // for (let word of words) {
@@ -84,16 +86,16 @@ const words = ['hello', 'world'];
 // console.log(html.join(''));
 
 // let builder = new HtmlBuilder('ul');
-let builder = Tag.create('ul')
+let builder = Tag.create("ul");
 for (let word of words) {
-  builder.addChild('li', word);
+  builder.addChild("li", word);
 }
 console.log(builder.root.toString());
 builder.clear();
 
 builder
-  .addChildFluent('li', 'foo')
-  .addChildFluent('li', 'bar')
-  .addChildFluent('li', 'bar');
+  .addChildFluent("li", "foo")
+  .addChildFluent("li", "bar")
+  .addChildFluent("li", "bar");
 
-console.log(builder.toString())
+console.log(builder.toString());

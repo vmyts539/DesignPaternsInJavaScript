@@ -32,10 +32,7 @@ class Point {
   }
 
   static newPolarPoint(rho, theta) {
-    return new Point(
-      rho * Math.cos(theta),
-      rho * Math.sin(theta)
-    );
+    return new Point(rho * Math.cos(theta), rho * Math.sin(theta));
   }
 }
 
@@ -43,5 +40,5 @@ class Point {
 let p = Point.newCartesianPoint(4, 5);
 console.log(p);
 
-let p2 = Point.newPolarPoint(5, Math.PI/2);
-console.log(p2)
+let p2 = Point.newPolarPoint(5, Math.PI / 2);
+console.log(p2);

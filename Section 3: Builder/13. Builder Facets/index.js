@@ -1,21 +1,23 @@
 class Person {
   constructor() {
     // address
-    this.streetAddress = this.postcode = this.city = '';
+    this.streetAddress = this.postcode = this.city = "";
 
     // employment
-    this.companyName = this.position = '';
+    this.companyName = this.position = "";
     this.annualIncome = 0;
   }
 
   toString() {
-    return `Person lives at ${this.streetAddress}, ${this.city}, ${this.postcode}\n`
-      + `and works at ${this.companyName} as a ${this.position} earning ${this.annualIncome}`;
+    return (
+      `Person lives at ${this.streetAddress}, ${this.city}, ${this.postcode}\n` +
+      `and works at ${this.companyName} as a ${this.position} earning ${this.annualIncome}`
+    );
   }
 }
 
 class PersonBuilder {
-  constructor(person=new Person()) {
+  constructor(person = new Person()) {
     this.person = person;
   }
 
@@ -53,35 +55,34 @@ class PersonJobBuilder extends PersonBuilder {
   }
 }
 
-class PersonAddressbuilder extends PersonBuilder
-{
-  constructor(person)
-  {
+class PersonAddressbuilder extends PersonBuilder {
+  constructor(person) {
     super(person);
   }
 
-  at(streetAddress)
-  {
+  at(streetAddress) {
     this.person.streetAddress = streetAddress;
     return this;
   }
 
-  withPostcode(postcode)
-  {
+  withPostcode(postcode) {
     this.person.postcode = postcode;
     return this;
   }
 
-  in(city)
-  {
+  in(city) {
     this.person.city = city;
     return this;
   }
 }
 
 let pb = new PersonBuilder();
-let person = pb
-  .lives.at('123 London Road').in('London').withPostcode('SW12BC')
-  .works.at('Fabrikam').asA('Engineer').earning(123000)
+let person = pb.lives
+  .at("123 London Road")
+  .in("London")
+  .withPostcode("SW12BC")
+  .works.at("Fabrikam")
+  .asA("Engineer")
+  .earning(123000)
   .build();
 console.log(person.toString());

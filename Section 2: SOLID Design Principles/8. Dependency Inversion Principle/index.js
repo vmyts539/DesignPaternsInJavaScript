@@ -1,7 +1,7 @@
 let Relationship = Object.freeze({
   parent: 0,
   child: 1,
-  sibling: 2
+  sibling: 2,
 });
 
 class Person {
@@ -14,15 +14,15 @@ class Person {
 
 class RelationshipBrowser {
   constructor() {
-    if (this.constructor.name === 'RelationshipBrowser') {
-      throw new Error('RelationshipBrowser is abstract!')
+    if (this.constructor.name === "RelationshipBrowser") {
+      throw new Error("RelationshipBrowser is abstract!");
     }
   }
 
   findAllChildrenOf(name) {}
 }
 
-class Relationships extends RelationshipBrowser{
+class Relationships extends RelationshipBrowser {
   constructor() {
     super();
     this.data = [];
@@ -32,12 +32,14 @@ class Relationships extends RelationshipBrowser{
     this.data.push({
       from: parent,
       type: Relationship.parent,
-      to: child
+      to: child,
     });
   }
 
   findAllChildrenOf(name) {
-    return this.data.filter(r => r.from.name === name && r.type === Relationship.parent).map(r => r.to);
+    return this.data
+      .filter((r) => r.from.name === name && r.type === Relationship.parent)
+      .map((r) => r.to);
   }
 }
 
@@ -55,22 +57,21 @@ class Research {
   // }
 
   constructor(browser) {
-    for (let p of browser.findAllChildrenOf('John')) { // calling method `findAllChildrenOf` is better option than getting low level `relationships.data` which might change it's data type so we would need to change the algorithm of finding the children
-      console.log(
-        `John has a child called ${p.name}`
-      )
+    for (let p of browser.findAllChildrenOf("John")) {
+      // calling method `findAllChildrenOf` is better option than getting low level `relationships.data` which might change it's data type so we would need to change the algorithm of finding the children
+      console.log(`John has a child called ${p.name}`);
     }
   }
 }
 
-let parent = new Person('John');
-let child1 = new Person('Chris');
-let child2 = new Person('Matt');
+let parent = new Person("John");
+let child1 = new Person("Chris");
+let child2 = new Person("Matt");
 
 let rels = new Relationships();
 rels.addParentAndChild(parent, child1);
-rels.addParentAndChild(parent, child2)
+rels.addParentAndChild(parent, child2);
 
-new Research(rels)
+new Research(rels);
 
 // The DIP principle states that HIGH-LEVE MODULES should not directly depend on LOW-LEVEL MODULES but rather on abstractions (abstract classes/interfaces)

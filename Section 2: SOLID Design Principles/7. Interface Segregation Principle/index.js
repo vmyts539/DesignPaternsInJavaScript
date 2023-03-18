@@ -1,19 +1,28 @@
 var aggregation = (baseClass, ...mixins) => {
   class base extends baseClass {
-    constructor (...args) {
+    constructor(...args) {
       super(...args);
       mixins.forEach((mixin) => {
-        copyProps(this,(new mixin));
+        copyProps(this, new mixin());
       });
     }
   }
-  let copyProps = (target, source) => {  // this function copies all properties and symbols, filtering out some special ones
+  let copyProps = (target, source) => {
+    // this function copies all properties and symbols, filtering out some special ones
     Object.getOwnPropertyNames(source)
       .concat(Object.getOwnPropertySymbols(source))
       .forEach((prop) => {
-        if (!prop.match(/^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/))
-          Object.defineProperty(target, prop, Object.getOwnPropertyDescriptor(source, prop));
-      })
+        if (
+          !prop.match(
+            /^(?:constructor|prototype|arguments|caller|name|bind|call|apply|toString|length)$/
+          )
+        )
+          Object.defineProperty(
+            target,
+            prop,
+            Object.getOwnPropertyDescriptor(source, prop)
+          );
+      });
   };
   mixins.forEach((mixin) => {
     // outside constructor() to allow aggregation(A,B,C).staticFunction() to be called etc.
@@ -23,14 +32,12 @@ var aggregation = (baseClass, ...mixins) => {
   return base;
 };
 
-class Document {
-
-}
+class Document {}
 
 class Machine {
   constructor() {
-    if (this.constructor.name === 'Machine') {
-      throw new Error('Machine is abstract!')
+    if (this.constructor.name === "Machine") {
+      throw new Error("Machine is abstract!");
     }
   }
 
@@ -55,10 +62,10 @@ class MultiFunctionPrinter extends Machine {
 
 class NotImplementedError extends Error {
   constructor(name) {
-    let msg = `${name} is not implemented!`
+    let msg = `${name} is not implemented!`;
     super(msg);
     if (Error.captureStackTrace)
-      Error.captureStackTrace(this, NotImplementedError)
+      Error.captureStackTrace(this, NotImplementedError);
   }
 }
 
@@ -71,7 +78,6 @@ class OldFasionPrinter extends Machine {
   fax(doc) {
     // super.fax(doc);
     // doesn't know how to do it
-
     // do nothing
     // NOTE: principle of least surprise. When pepople use your API they should not be suprised, they should not see some magic behaviour. They need to see predictable behaviour
     // old printer shouldn't have the fax method, customer will be suprised to know that it has such interface
@@ -81,7 +87,7 @@ class OldFasionPrinter extends Machine {
     // super.scan(doc);
     // doesn't know how to do it
     // throw new Error('not implemented!')
-    throw new NotImplementedError('OldFasionPrinter.scan');
+    throw new NotImplementedError("OldFasionPrinter.scan");
   }
 }
 
@@ -90,8 +96,8 @@ class OldFasionPrinter extends Machine {
 
 class Printer {
   constructor() {
-    if (this.constructor.name === 'Printer') {
-      throw new Error('Printer is abstract!')
+    if (this.constructor.name === "Printer") {
+      throw new Error("Printer is abstract!");
     }
   }
 
@@ -100,8 +106,8 @@ class Printer {
 
 class Scanner {
   constructor() {
-    if (this.constructor.name === 'Scanner') {
-      throw new Error('Scanner is abstract!')
+    if (this.constructor.name === "Scanner") {
+      throw new Error("Scanner is abstract!");
     }
   }
 
@@ -114,4 +120,4 @@ class Photocopier extends aggregation(Printer, Scanner) {
 }
 
 let printer = new OldFasionPrinter();
-printer.scan()
+printer.scan();

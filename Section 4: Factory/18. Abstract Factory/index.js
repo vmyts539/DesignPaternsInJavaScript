@@ -1,8 +1,8 @@
-const readline = require('readline');
+const readline = require("readline");
 let rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
-})
+  output: process.stdout,
+});
 
 class HotDrink {
   consume() {}
@@ -10,13 +10,13 @@ class HotDrink {
 
 class Tea extends HotDrink {
   consume() {
-    console.log('This tea is nice with lemon');
+    console.log("This tea is nice with lemon");
   }
 }
 
 class Coffee extends HotDrink {
   consume() {
-    console.log('This coffee is delicious!');
+    console.log("This coffee is delicious!");
   }
 }
 
@@ -40,8 +40,8 @@ class CoffeeFactory extends HotDrinkFactory {
 
 let AvailableDrink = Object.freeze({
   coffee: CoffeeFactory,
-  tea: TeaFactory
-})
+  tea: TeaFactory,
+});
 
 class HotDrinkMachine {
   constructor() {
@@ -53,16 +53,19 @@ class HotDrinkMachine {
   }
 
   interact(consumer) {
-    rl.question('Please specify drink and amount ' + '(e.g., tea 50): ', answer => {
-      let parts = answer.split(' ');
-      let name = parts[0];
-      let amount = parseInt(parts[1]);
-      let d = this.factories[name].prepare(amount);
+    rl.question(
+      "Please specify drink and amount " + "(e.g., tea 50): ",
+      (answer) => {
+        let parts = answer.split(" ");
+        let name = parts[0];
+        let amount = parseInt(parts[1]);
+        let d = this.factories[name].prepare(amount);
 
-      rl.close();
+        rl.close();
 
-      consumer(d);
-    })
+        consumer(d);
+      }
+    );
   }
 
   // makeDrink(type) {
@@ -84,8 +87,6 @@ let machine = new HotDrinkMachine();
 //   rl.close();
 // })
 
-machine.interact(
-  function(drink) {
-    drink.consume();
-  }
-)
+machine.interact(function (drink) {
+  drink.consume();
+});
